@@ -8,6 +8,7 @@ import useFetch from "./useFetch";
 import Loader from "./Loader";
 import TextDisplay from "./contentDisplay/TextDisplay";
 import ImageDisplay from "./contentDisplay/ImageDisplay";
+import { send } from "vite";
 
 /*post getTopicContent  {app : {appName : name}, topic : {topicName : name}}*/
 
@@ -18,6 +19,7 @@ const Content = () => {
     const [orderNum, setOrderNum] = useState(0);
     const { postString, post } = useFetch("https://uztechtips.onrender.com/api/v1/");
     const [showImage, setShowImage] = useState(false);
+    const [sending, setSending] = useState(false);
     
     const params = useParams();
 
@@ -82,7 +84,8 @@ const Content = () => {
     }
 
     const handleContentSave = () => {
-        postString("addData", elements).then(data => console.log(data));
+        setSending(true);
+        postString("addData", elements).then(data => {console.log(data); setSending(false)});
     }
 
 
@@ -103,7 +106,8 @@ const Content = () => {
                 return (<div key={element.orderNumber}>{contentTypeMap[element.dataType]?.(element.orderNumber) || <div>Wrong dataType</div>}</div>);
             })}
             {showImage && <img src={`https://uztechtips.onrender.com/api/images/${elements[0].data.content}`}/>}
-            <button type="button" onClick={handleContentSave}>Save</button>
+            <button type="button" onClick={handleContentSave} disabled={sending}>Save</button>
+            {sending && <p>Sending...</p>}
             {displayElements && displayElements.map(element => {
                 return (<div className="display-content" key={element.orderNumber}>{displayMap[element.dataType]?.(element.content.content)}</div>);
             })}
