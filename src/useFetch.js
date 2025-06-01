@@ -106,5 +106,27 @@ export default function useFetch(baseUrl){
         })
     }
 
-    return {get, post, postImage, postString, loading};
+    const deleteRequest = (url, body) => {
+        return new Promise((resolve, reject) => {
+            fetch(baseUrl+url, {
+                method : "DELETE",
+                headers : {
+                    "Content-type" : "application/json"
+                },
+                body : JSON.stringify(body)
+            })
+            .then(response => response.text())
+            .then(data => {
+                if(!data){
+                    return reject(data);
+                }
+                resolve(data);
+            })
+            .catch(e => {
+                reject(e);
+            });
+        });
+    }
+
+    return {get, post, postImage, postString, deleteRequest, loading};
 }

@@ -8,7 +8,7 @@ import useFetch from "./useFetch";
 import Loader from "./Loader";
 import TextDisplay from "./contentDisplay/TextDisplay";
 import ImageDisplay from "./contentDisplay/ImageDisplay";
-import { send } from "vite";
+
 
 /*post getTopicContent  {app : {appName : name}, topic : {topicName : name}}*/
 
@@ -18,7 +18,7 @@ const Content = () => {
     const [displayElements, setDisplayElements] = useState([]);
     const [orderNum, setOrderNum] = useState(0);
     const { postString, post } = useFetch("https://uztechtips.onrender.com/api/v1/");
-    const [showImage, setShowImage] = useState(false);
+    
     const [sending, setSending] = useState(false);
     
     const params = useParams();
@@ -38,7 +38,7 @@ const Content = () => {
     }
 
     useEffect(() => {
-        setShowImage(false);
+        
         setElements([]); 
         setOrderNum(0);
         post("getTopicContent", {
@@ -79,10 +79,6 @@ const Content = () => {
             ));
     }
 
-    const handleShowImage = () => {
-        setShowImage(!showImage);
-    }
-
     const handleContentSave = () => {
         setSending(true);
         postString("addData", elements).then(data => {console.log(data); setSending(false)});
@@ -99,13 +95,11 @@ const Content = () => {
                 <div className="content-button-item" /*onClick={() => handleContentAdd("TABLE")}*/>+table</div>
                 <div className="content-button-item" onClick={() => handleContentAdd("IMAGE")}>+image</div>
                 <div className="content-button-item" /*onClick={() => handleContentAdd("LIST")}*/>+list</div>
-                <div className="content-button-item" onClick={handleShowImage}>Show image</div>
                 <div className="content-button-item" onClick={() => {setShowImage(false);setElements([]); setOrderNum(0);}}>Clean</div>
             </div>
             {elements && elements.map(element => {
                 return (<div key={element.orderNumber}>{contentTypeMap[element.dataType]?.(element.orderNumber) || <div>Wrong dataType</div>}</div>);
             })}
-            {showImage && <img src={`https://uztechtips.onrender.com/api/images/${elements[0].data.content}`}/>}
             <button type="button" onClick={handleContentSave} disabled={sending}>Save</button>
             {sending && <p>Sending...</p>}
             {displayElements && displayElements.map(element => {

@@ -1,9 +1,11 @@
-import clsx from "clsx";
-import { useState } from "react";
-import { useParams, NavLink, Link } from "react-router-dom";
+import useFetch from "./useFetch";
+import { useParams, NavLink, useNavigate } from "react-router-dom";
 const TopicListItem = (props) => {
 
     const params = useParams();
+    const {deleteRequest} = useFetch("https://uztechtips.onrender.com/api/v1/");
+
+    const navigate = useNavigate();
 
     /*return <>
         <div className={classes}>
@@ -15,11 +17,28 @@ const TopicListItem = (props) => {
         </NavLink>
         </div>
     </>*/
+    const deleteTopic = () => {
+        console.log("Topic will be deleted!" + params.topicName);
+        deleteRequest("deleteTopic", {
+            app : {
+                appName : params.appName
+            },
+            topic : {
+                topicName : params.topicName
+            }
+        }).then(data => console.log(data));
+        navigate(`/${params.appName}`);
+    }
 
     return <>
         
         <NavLink className={({isActive}) => (isActive ? "sidebar-item sidebar-item-active" : "sidebar-item")} to={`/${params.appName}/${props.topicName}`}>
             {props.topicName}
+            {/*<div className="sidebar-delete" onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                deleteTopic();
+            }}><img src="bin.png"/></div>*/}
         </NavLink>
         
     </>
