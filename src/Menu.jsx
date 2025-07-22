@@ -5,13 +5,15 @@ import Loader from "./Loader";
 
 
 
-const Menu = () => {
+const Menu = (props) => {
     const [adding, setAdding] = useState(false);
     const [app, setApp] = useState({});
     const [allApps, setAllApps] = useState([]);
     const { post, get, loading } = useFetch("https://uztechtips.onrender.com/api/v1/");
 
-    useEffect(() => {get("getApps").then(data => setAllApps(data));},[]);
+    useEffect(() => {
+        
+        get("getApps", props.authToken).then(data => setAllApps(data));},[]);
 
     const handleAddButton = () => {
         setAdding(true);
@@ -34,7 +36,7 @@ const Menu = () => {
 
     return <>
         <div className="menu-bar">
-        {allApps && allApps.map(app => <MenuItem key={app.id} appName={app.appName}/>)}
+        {allApps && allApps.map(app => <MenuItem key={app.id} appName={app.appName} authToken={props.authToken}/>)}
         {adding && <div className="menu-item">
             <input type="text" onChange={handleAppNameChange} placeholder="Enter new app"/>
             <button type="button" onClick={handleSaveButton}>Save</button>

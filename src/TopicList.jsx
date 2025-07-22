@@ -4,7 +4,7 @@ import TopicListItem from "./TopicListItem";
 import useFetch from "./useFetch";
 import Loader from "./Loader";
 
-const TopicList = () => {
+const TopicList = (props) => {
     const [adding, setAdding] = useState(false);
     const params = useParams();
     const [topic, setTopic] = useState({});
@@ -12,11 +12,11 @@ const TopicList = () => {
     const { postString, post, loading } = useFetch("https://uztechtips.onrender.com/api/v1/");
 
     useEffect(() => {
-        post("getAppTopics", {appName : params.appName}).then(data => setAllTopics(data));
+        post("getAppTopics", {appName : params.appName}, props.authToken).then(data => setAllTopics(data));
     }, [params]);
     
     useEffect(() => {
-        post("getAppTopics", {appName : params.appName}).then(data => setAllTopics(data));
+        post("getAppTopics", {appName : params.appName}, props.authToken).then(data => setAllTopics(data));
         //console.log("New topic: " + JSON.stringify(topic));
     },[topic]);
     
@@ -37,9 +37,9 @@ const TopicList = () => {
     }
 
     const handleSaveButton = () => {
-        postString("addTopic", topic).then(data => {
-            console.log(data);
-            post("getAppTopics", {appName : params.appName}).then(data => setAllTopics(data));
+        postString("addTopic", topic, props.authToken).then(data => {
+            
+            post("getAppTopics", {appName : params.appName}, props.authToken).then(data => setAllTopics(data));
         });
         setAdding(false);
     }
@@ -49,7 +49,7 @@ const TopicList = () => {
     return <>
         <div className="sidebar">
         {allTopics && allTopics.map(topics => {
-            return <TopicListItem key={topics.id} topicName={topics.topicName}/>
+            return <TopicListItem key={topics.id} topicName={topics.topicName} authToken={props.authToken}/>
         })}
         {adding && <div className="sidebar-item">
             <input type="text" onChange={handleNameChange} placeholder="Add new topic" />

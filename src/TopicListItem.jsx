@@ -26,7 +26,7 @@ const TopicListItem = (props) => {
             topic : {
                 topicName : params.topicName
             }
-        }).then(data => console.log(data));
+        }, props.authToken).then(data => console.log(data));
         navigate(`/${params.appName}`);
     }
 

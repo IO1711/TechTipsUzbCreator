@@ -17,7 +17,7 @@ const Image = (props) => {
 
         const file = formData.get("file");
 
-        postImage("upload", formData).then(data => {
+        postImage("upload", formData, props.authToken).then(data => {
             props.onChange(props.orderNumber, {content : data}); 
             setSending(false); 
             setSent(true);

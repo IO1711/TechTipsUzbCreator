@@ -1,14 +1,29 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function useFetch(baseUrl){
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
 
-    const get = (url) => {
+    const get = (url, authToken) => {
         setLoading(true);
         return new Promise((resolve, reject) => {
-            fetch(baseUrl+url)
-            .then(response => response.json())
+            fetch(baseUrl+url,{
+                method : "GET",
+                headers : {
+                "Content-Type" : "application/json",
+                "Authorization" : `Bearer ${authToken}`
+            }})
+            .then(response => {
+                if(response.status===401){
+                    handleUnaothorized();
+                }
+                if(!response.ok){
+                    throw new Error("Something went wrong " + response.status);
+                }
+                return response.json();
+            })
             .then(data => {
                 if(!data){
                     setLoading(false);
@@ -25,14 +40,15 @@ export default function useFetch(baseUrl){
     }
 
 
-    const post = (url, body) => {
+    const post = (url, body, authToken) => {
         setLoading(true);
         return new Promise((resolve, reject) => {
             fetch(baseUrl+url, {
                 ...{
                     method : "POST",
                     headers : {
-                        "Content-type" : "application/json"
+                        "Content-type" : "application/json",
+                        "Authorization" : `Bearer ${authToken}`
                     },
                     body : JSON.stringify(body)
                 }
@@ -53,14 +69,15 @@ export default function useFetch(baseUrl){
         })
     }
 
-    const postString = (url, body) => {
+    const postString = (url, body, authToken) => {
         setLoading(true);
         return new Promise((resolve, reject) => {
             fetch(baseUrl+url, {
                 ...{
                     method : "POST",
                     headers : {
-                        "Content-type" : "application/json"
+                        "Content-type" : "application/json",
+                        "Authorization" : `Bearer ${authToken}`
                     },
                     body : JSON.stringify(body)
                 }
@@ -81,12 +98,43 @@ export default function useFetch(baseUrl){
         })
     }
 
-    const postImage = (url, body) => {
+    const postAuth = (url, body) => {
         setLoading(true);
         return new Promise((resolve, reject) => {
             fetch(baseUrl+url, {
                 ...{
                     method : "POST",
+                    headers : {
+                        "Content-type" : "application/json",
+                    },
+                    body : JSON.stringify(body)
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                if(!data){
+                    setLoading(false);
+                    return reject(data);
+                }
+                setLoading(false);
+                resolve(data);
+            })
+            .catch(e => {
+                setLoading(false);
+                reject(e);
+            });
+        })
+    }
+
+    const postImage = (url, body, authToken) => {
+        setLoading(true);
+        return new Promise((resolve, reject) => {
+            fetch(baseUrl+url, {
+                ...{
+                    method : "POST",
+                    headers: {
+                        "Authorization" : `Bearer ${authToken}`
+                    },
                     body : body
                 }
             })
@@ -106,12 +154,13 @@ export default function useFetch(baseUrl){
         })
     }
 
-    const deleteRequest = (url, body) => {
+    const deleteRequest = (url, body, authToken) => {
         return new Promise((resolve, reject) => {
             fetch(baseUrl+url, {
                 method : "DELETE",
                 headers : {
-                    "Content-type" : "application/json"
+                    "Content-type" : "application/json",
+                    "Authorization" : `Bearer ${authToken}`
                 },
                 body : JSON.stringify(body)
             })
@@ -128,5 +177,10 @@ export default function useFetch(baseUrl){
         });
     }
 
-    return {get, post, postImage, postString, deleteRequest, loading};
+    const handleUnaothorized = () => {
+        navigate("/login");
+        return;
+    }
+
+    return {get, post, postImage, postString, postAuth, deleteRequest, loading};
 }

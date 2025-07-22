@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import Text from "./contentTypes/Text";
 import Image from "./contentTypes/Image";
 import Table from "./contentTypes/Table";
@@ -18,6 +18,7 @@ const Content = () => {
     const [displayElements, setDisplayElements] = useState([]);
     const [orderNum, setOrderNum] = useState(0);
     const { postString, post } = useFetch("https://uztechtips.onrender.com/api/v1/");
+    const {authToken} = useOutletContext();
     
     const [sending, setSending] = useState(false);
     
@@ -26,18 +27,19 @@ const Content = () => {
     
 
     const contentTypeMap = {
-        TEXT : (orderNumber) => <Text orderNumber={orderNumber} onChange={handleEditContent}/>,
+        TEXT : (orderNumber, authToken) => <Text authToken={authToken} orderNumber={orderNumber} onChange={handleEditContent}/>,
         TABLE : (orderNumber) => <Table/>,
-        IMAGE : (orderNumber) => <Image orderNumber={orderNumber} onChange={handleEditContent}/>,
+        IMAGE : (orderNumber, authToken) => <Image authToken={authToken} orderNumber={orderNumber} onChange={handleEditContent}/>,
         LIST : () => <List/>
     }
 
     const displayMap = {
-        TEXT : (content) => <TextDisplay content={content}/>,
-        IMAGE : (imageName) => <ImageDisplay imageName={imageName}/>
+        TEXT : (content, authToken) => <TextDisplay authToken={authToken} content={content}/>,
+        IMAGE : (imageName, authToken) => <ImageDisplay authToken={authToken} imageName={imageName}/>
     }
 
     useEffect(() => {
+        
         
         setElements([]); 
         setOrderNum(0);
@@ -48,8 +50,8 @@ const Content = () => {
             topic : {
                 topicName : params.topicName
             }
-        }).then(data => {
-            console.log(data);
+        }, authToken).then(data => {
+            
             setDisplayElements(data);
         })
     }, [params]);
@@ -81,7 +83,7 @@ const Content = () => {
 
     const handleContentSave = () => {
         setSending(true);
-        postString("addData", elements).then(data => {console.log(data); setSending(false)});
+        postString("addData", elements, authToken).then(data => {console.log(data); setSending(false)});
     }
 
 
@@ -98,12 +100,12 @@ const Content = () => {
                 <div className="content-button-item" onClick={() => {setShowImage(false);setElements([]); setOrderNum(0);}}>Clean</div>
             </div>
             {elements && elements.map(element => {
-                return (<div key={element.orderNumber}>{contentTypeMap[element.dataType]?.(element.orderNumber) || <div>Wrong dataType</div>}</div>);
+                return (<div key={element.orderNumber}>{contentTypeMap[element.dataType]?.(element.orderNumber, authToken) || <div>Wrong dataType</div>}</div>);
             })}
             <button type="button" onClick={handleContentSave} disabled={sending}>Save</button>
             {sending && <p>Sending...</p>}
             {displayElements && displayElements.map(element => {
-                return (<div className="display-content" key={element.orderNumber}>{displayMap[element.dataType]?.(element.content.content)}</div>);
+                return (<div className="display-content" key={element.orderNumber}>{displayMap[element.dataType]?.(element.content.content, authToken)}</div>);
             })}
         </div>
     </>
