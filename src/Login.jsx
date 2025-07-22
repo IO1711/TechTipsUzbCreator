@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useFetch from "./useFetch";
+import Input from "./Input";
+import Button from "./Button";
 
 
 const Login = (props) => {
@@ -31,9 +33,9 @@ const Login = (props) => {
     }
 
     return <>
-        <input type="text" name="username" onChange={handleUsenameChange}/>
-        <input type="text" name="password" onChange={handlePasswordChange}/>
-        <button type="button" onClick={handleLoginSubmit}>Login</button>
+        <Input type="text" name="username" onChange={handleUsenameChange}/>
+        <Input type="text" name="password" onChange={handlePasswordChange}/>
+        <Button type="button" onClick={handleLoginSubmit}>Login</Button>
     </>
 }
 

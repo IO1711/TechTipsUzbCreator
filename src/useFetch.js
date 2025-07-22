@@ -16,12 +16,6 @@ export default function useFetch(baseUrl){
                 "Authorization" : `Bearer ${authToken}`
             }})
             .then(response => {
-                if(response.status===401){
-                    handleUnaothorized();
-                }
-                if(!response.ok){
-                    throw new Error("Something went wrong " + response.status);
-                }
                 return response.json();
             })
             .then(data => {
@@ -175,11 +169,6 @@ export default function useFetch(baseUrl){
                 reject(e);
             });
         });
-    }
-
-    const handleUnaothorized = () => {
-        navigate("/login");
-        return;
     }
 
     return {get, post, postImage, postString, postAuth, deleteRequest, loading};
