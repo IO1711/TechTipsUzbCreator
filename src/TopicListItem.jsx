@@ -34,11 +34,11 @@ const TopicListItem = (props) => {
         
         <NavLink className={({isActive}) => (isActive ? "sidebar-item sidebar-item-active" : "sidebar-item")} to={`/${params.appName}/${props.topicName}`}>
             {props.topicName}
-            {/*<div className="sidebar-delete" onClick={(e) => {
+            {<div className="sidebar-delete" onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 deleteTopic();
-            }}><img src="bin.png"/></div>*/}
+            }}><img src="bin.png"/></div>}
         </NavLink>
         
     </>

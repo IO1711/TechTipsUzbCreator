@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import Input from "./Input";
 
-const Home = () => {
+const Home = (props) => {
     const navigate = useNavigate();
 
     const handleHomeLogin = () => {
@@ -11,13 +11,18 @@ const Home = () => {
 
     return <>
         <div className="home-container">
-            <div className="home-text">
+            {props.authToken===null && <div className="home-text">
+                
                 <h1>Nimanidir o'rgatmoqchimisiz?</h1>
                 <p style={{fontSize:"19px"}}>O‘quvchilaringiz, hamkasblaringiz yoki boshqalar uchun tez va qulay qo‘llanmalarni yuklang. Vizual, sodda va samarali.</p>
                 <p>Boshlash uchun tizimga kiring!</p>
                 <Button onClick={handleHomeLogin}>Kirish</Button>
                 
-            </div>
+            </div>}
+            {props.authToken!==null && <div className="home-text">
+                    
+            </div>}
+            
             <img src="homePagePicUz.png"></img>
         </div>
     </>

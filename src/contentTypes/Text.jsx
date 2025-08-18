@@ -10,7 +10,7 @@ const Text = (props) => {
     
 
     return <>
-        <textarea onChange={handleTextChange} className="content-text" placeholder="Enter text"></textarea>
+        <textarea onChange={handleTextChange} className="content-text custom-input" placeholder="Enter text" value={props.content}></textarea>
     </>
 }
 

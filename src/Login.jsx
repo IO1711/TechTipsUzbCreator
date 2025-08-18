@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import useFetch from "./useFetch";
 import Input from "./Input";
 import Button from "./Button";
@@ -20,7 +20,8 @@ const Login = (props) => {
         setPassword(event.target.value);
     }
 
-    const handleLoginSubmit = () => {
+    const handleLoginSubmit = (e) => {
+        e.preventDefault();
 
         postAuth("login", {
             username,
@@ -33,9 +34,16 @@ const Login = (props) => {
     }
 
     return <>
-        <Input type="text" name="username" onChange={handleUsenameChange}/>
-        <Input type="text" name="password" onChange={handlePasswordChange}/>
-        <Button type="button" onClick={handleLoginSubmit}>Login</Button>
+        <div className="auth-container">
+            <h2>Kirish</h2>
+            <form className="auth-child" onSubmit={handleLoginSubmit}>
+                <Input type="text" name="username" onChange={handleUsenameChange}/>
+                <Input type="text" name="password" onChange={handlePasswordChange}/>
+                <Button type="submit">Login</Button>
+                <p>Tizimga birinchi marta kiryabsizmi? Unda ro'yxatdan o'ting</p>
+                <Link to={"/register"}>Ro'yxatdan o'tish</Link>
+            </form>
+        </div>
     </>
 }
 

@@ -171,5 +171,34 @@ export default function useFetch(baseUrl){
         });
     }
 
-    return {get, post, postImage, postString, postAuth, deleteRequest, loading};
+    const putString = (url, body, authToken) => {
+        setLoading(true);
+        return new Promise((resolve, reject) => {
+            fetch(baseUrl+url, {
+                ...{
+                    method : "PUT",
+                    headers : {
+                        "Content-type" : "application/json",
+                        "Authorization" : `Bearer ${authToken}`
+                    },
+                    body : JSON.stringify(body)
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                if(!data){
+                    setLoading(false);
+                    return reject(data);
+                }
+                setLoading(false);
+                resolve(data);
+            })
+            .catch(e => {
+                setLoading(false);
+                reject(e);
+            });
+        })
+    }
+
+    return {get, post, postImage, postString, postAuth, putString, deleteRequest, loading};
 }

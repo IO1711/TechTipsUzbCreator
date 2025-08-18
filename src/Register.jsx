@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useFetch from "./useFetch";
+import Input from "./Input";
+import Button from "./Button";
 
 const Register = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const {post} = useFetch("https://uztechtips.onrender.com/api/v1/");
+    const {postAuth} = useFetch("https://uztechtips.onrender.com/api/v1/");
 
 
     const handleUsenameChange = (event) => {
@@ -19,7 +21,7 @@ const Register = () => {
 
     const handleLoginSubmit = () => {
 
-        post("register", {
+        postAuth("register", {
             username,
             password
         }).then(data => {
@@ -28,9 +30,16 @@ const Register = () => {
     }
 
     return <>
-        <input type="text" name="username" onChange={handleUsenameChange}/>
-        <input type="text" name="password" onChange={handlePasswordChange}/>
-        <button type="button" onClick={handleLoginSubmit}>Login</button>
+        <div className="auth-container">
+            <h2>Ro'yxatdan o'tish</h2>
+            <div className="auth-child">
+                <Input type="text" name="username" onChange={handleUsenameChange}/>
+                <Input type="text" name="password" onChange={handlePasswordChange}/>
+                <Button type="button" onClick={handleLoginSubmit}>Ro'yxatdan o'tish</Button>
+                <p>Ro'yxatdan o'tganmisiz? Unda tizimga kiring</p>
+                <Link to={"/login"}>Kirish</Link>
+            </div>
+        </div>
     </>
 }
 

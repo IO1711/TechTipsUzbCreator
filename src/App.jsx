@@ -24,7 +24,7 @@ function App() {
         <Header/>
         {authToken!==null && <Menu authToken={authToken}/>}
         <Routes>
-          <Route path="/" element={<Home/>}></Route>
+          <Route path="/" element={<Home authToken={authToken}/>}></Route>
           <Route path="/:appName/" element={<Layout authToken={authToken} />}>
             <Route path=":topicName" element={<Content/>}></Route>
           </Route>

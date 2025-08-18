@@ -1,3 +1,52 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 /* ======================== GRAPHITE ======================== POTENTIAL*/
 .theme-graphite {
   --color-bg: #e5e7eb;
@@ -83,6 +132,23 @@
   text-align: center;
 }
 
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 89vh;
+  padding: 5%;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-child {
+  display: flex;
+  width: 20%;
+  height: 50%;
+  flex-direction: column;
+}
+
 .home-container {
   display: flex;
   flex-direction: row;
@@ -121,6 +187,8 @@
   cursor: pointer;
   transition: background 0.3s;
   text-decoration: none;
+  user-select: none;   /* Prevent text highlighting */
+  -webkit-user-select: none;
 }
 
 .menu-item-active{
@@ -132,6 +200,8 @@
   transition: background 0.3s;
   text-decoration: none;
   background-color: var(--color-menu-active-bg);
+  user-select: none;   /* Prevent text highlighting */
+  -webkit-user-select: none;
 }
 
 .menu-item:hover {
@@ -163,6 +233,8 @@
   transition: background 0.2s;
   text-decoration: none;
   color: var(--color-sidebar-text);
+  user-select: none;   /* Prevent text highlighting */
+  -webkit-user-select: none;
 }
 
 .sidebar-delete{
@@ -178,6 +250,8 @@
 
 .sidebar-item-active{
   background-color: var(--color-sidebar-active-bg);
+  user-select: none;   /* Prevent text highlighting */
+  -webkit-user-select: none;
 }
 
 
@@ -194,6 +268,7 @@
   color: var(--color-content-text);
   font-size: 1.1rem;
   line-height: 1.6;
+  position: relative;
   overflow-y: auto;
 }
 
@@ -227,7 +302,9 @@
 }
 
 .display-content img {
-  width: 100%;
+  max-width: 100%;
+  height: auto;
+  width: auto;
 }
 
 
@@ -277,6 +354,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin: 3px;
 }
 
 .custom-button:hover {
@@ -292,8 +370,9 @@
   border: 1px solid #d1d5db; /* light gray */
   border-radius: 6px;
   font-size: 16px;
-  width: 200px;
+  width: 100%;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 2%;
 }
 
 .custom-input:focus {
@@ -301,4 +380,58 @@
   border-color: #3B82F6; /* blue */
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
+
+
+/*.slide-page {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: white;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(100%);
+  transition: transform 0.4s ease-in-out, visibility 0s linear 0.4s;
+  z-index: 10;
+  padding: 20px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+
+.slide-page.show {
+  transform: translateY(0%);
+  visibility: visible;
+  pointer-events: auto;
+  transition: transform 0.4s ease-in-out;
+}*/
+
+.slide-page {
+  position: fixed; /* Changed from absolute */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: white;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(100%);
+  transition: transform 0.4s ease-in-out, visibility 0s linear 0.4s;
+  z-index: 9999; /* Make sure it's above everything */
+  padding: 20px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  visibility: hidden;
+  pointer-events: none;
+  overflow-y: auto;
+}
+
+.slide-page.show {
+  transform: translateY(0%);
+  visibility: visible;
+  pointer-events: auto;
+  transition: transform 0.4s ease-in-out;
+}
+
 
