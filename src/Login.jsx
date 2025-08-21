@@ -38,7 +38,7 @@ const Login = (props) => {
             <h2>Kirish</h2>
             <form className="auth-child" onSubmit={handleLoginSubmit}>
                 <Input type="text" name="username" onChange={handleUsenameChange}/>
-                <Input type="text" name="password" onChange={handlePasswordChange}/>
+                <Input type="password" name="password" onChange={handlePasswordChange}/>
                 <Button type="submit">Login</Button>
                 <p>Tizimga birinchi marta kiryabsizmi? Unda ro'yxatdan o'ting</p>
                 <Link to={"/register"}>Ro'yxatdan o'tish</Link>

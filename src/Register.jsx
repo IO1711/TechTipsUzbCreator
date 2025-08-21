@@ -34,7 +34,7 @@ const Register = () => {
             <h2>Ro'yxatdan o'tish</h2>
             <div className="auth-child">
                 <Input type="text" name="username" onChange={handleUsenameChange}/>
-                <Input type="text" name="password" onChange={handlePasswordChange}/>
+                <Input type="password" name="password" onChange={handlePasswordChange}/>
                 <Button type="button" onClick={handleLoginSubmit}>Ro'yxatdan o'tish</Button>
                 <p>Ro'yxatdan o'tganmisiz? Unda tizimga kiring</p>
                 <Link to={"/login"}>Kirish</Link>
