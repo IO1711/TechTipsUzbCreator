@@ -79,10 +79,22 @@
 .header {
   background-color: var(--color-header-bg);
   color: var(--color-header-text);
-  padding: 1rem;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
   font-size: 1.8rem;
   font-weight: bold;
-  text-align: center;
+  text-align:justify;
+}
+
+.header img {
+  height: 2em;
+  width: auto;
+  margin-left: 1em;
+}
+
+a {
+  text-decoration: none;
 }
 
 .auth-container {
