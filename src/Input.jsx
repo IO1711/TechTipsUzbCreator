@@ -1,8 +1,15 @@
+import clsx from "clsx";
 
 const Input = (props) => {
+
+    const classNames = clsx(
+        "custom-input",
+        props.className
+    );
+
     return <>
         <label htmlFor={props.name}>{props.name}</label>
-        <input className="custom-input" onChange={props.onChange} type={props.type} name={props.name}/>
+        <input className={classNames} onChange={props.onChange} type={props.type} name={props.name}/>
     </>
 }
 

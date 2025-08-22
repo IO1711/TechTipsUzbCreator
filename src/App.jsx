@@ -8,13 +8,17 @@ import Content from "./Content.jsx";
 import Login from "./Login.jsx";
 import Register from "./Register.jsx";
 import { useEffect, useState } from "react";
+import { preloadTopics} from "./searchIndex.js";
 
 
 function App() {
 
-  const [authToken, setAuthToken] = useState(null);
-  
-  
+  const [authToken, setAuthToken] = useState(localStorage.getItem("authToken"));
+
+  useEffect(()=>{
+    preloadTopics();
+  },[]);
+
   
 
   return (

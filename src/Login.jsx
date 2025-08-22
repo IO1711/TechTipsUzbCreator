@@ -28,6 +28,7 @@ const Login = (props) => {
             password
         }).then(data => {
             
+            localStorage.setItem("authToken", data);
             props.handleAuth(data);
             navigate("/")
         });
