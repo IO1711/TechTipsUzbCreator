@@ -18,7 +18,7 @@ const Header = (props) => {
       <div className="header-child"><Link to={"/"}><img src="./panda_E_white_transparent_trimmed.png"/></Link></div>
       <div className="header-big-child">
         <Input type="search" onChange={handleSearchChange} className="search-input"/>
-        <SearchResults results={results}></SearchResults>
+        <SearchResults results={results} handleResults={setResults}></SearchResults>
       </div>
       
       <div className="header-child">account</div>

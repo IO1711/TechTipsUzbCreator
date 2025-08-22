@@ -1,19 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
-const SearchResults = ({results}) => {
+const SearchResults = ({results, handleResults}) => {
+    const navigate = useNavigate();
     if(!results.length) return null;
-    console.log("Search results: " + results);
+
+    const handleResultClick = (appName, topicName) => {
+        navigate(`/${appName}/${topicName}`);
+        handleResults([]);
+    }
 
     return <>
         <div className="search-results">
             {
                 results.map((item, i) => (
-                <Link key={i} to={`/${item.appName}/${item.topicName}`}>
-                <div key={i} className="search-result-row">
+                
+                <div key={i} className="search-result-row" onClick={() => handleResultClick(item.appName, item.topicName)}>
                     {item.appName + " -> " + item.topicName}
                 </div>
-                </Link>
+                
                 ))
             }
         </div>
