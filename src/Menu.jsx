@@ -13,7 +13,8 @@ const Menu = (props) => {
 
     useEffect(() => {
         
-        get("getApps", props.authToken).then(data => setAllApps(data));},[]);
+        get("getApps", props.authToken).then(data => setAllApps(data));},
+    [props.authToken]);
 
     const handleAddButton = () => {
         setAdding(true);

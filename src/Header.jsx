@@ -3,6 +3,7 @@ import Input from "./Input";
 import { search } from "./searchIndex";
 import SearchResults from "./SearchResult";
 import { useState } from "react";
+import Button from "./Button";
 
 const Header = (props) => {
 
@@ -13,6 +14,11 @@ const Header = (props) => {
       setResults(search(event.target.value));
     }
 
+    function handleLogout(){
+      props.handleAuthToken("");
+      localStorage.removeItem("authToken");
+    }
+
     return <>
     <div className="header">
       <div className="header-child"><Link to={"/"}><img src="./panda_E_white_transparent_trimmed.png"/></Link></div>
@@ -21,7 +27,7 @@ const Header = (props) => {
         <SearchResults results={results} handleResults={setResults}></SearchResults>
       </div>
       
-      <div className="header-child">account</div>
+      <div className="header-child"><Button onClick={handleLogout}>Logout</Button></div>
     </div>
   </>
 }

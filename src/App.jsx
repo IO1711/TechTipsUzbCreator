@@ -25,7 +25,7 @@ function App() {
     <>
       <BrowserRouter>
       <div className='theme-graphite'>
-        <Header/>
+        <Header handleAuthToken={setAuthToken}/>
         {authToken!==null && <Menu authToken={authToken}/>}
         <Routes>
           <Route path="/" element={<Home authToken={authToken}/>}></Route>

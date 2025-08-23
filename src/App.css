@@ -82,7 +82,7 @@
   padding: 0.3rem;
   display: flex;
   align-items: center;
-  font-size: 1.8rem;
+  
   font-weight: bold;
   text-align:center;
   z-index: 1000;
@@ -131,7 +131,7 @@
 }
 
 .header img {
-  height: 2em;
+  height: 4rem;
   width: auto;
   margin-left: 1em;
   margin-right: 1em;
