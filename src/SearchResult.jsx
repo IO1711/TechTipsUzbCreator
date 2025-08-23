@@ -17,6 +17,9 @@ const SearchResults = ({results, handleResults}) => {
                 
                 <div key={i} className="search-result-row" onClick={() => handleResultClick(item.appName, item.topicName)}>
                     {item.appName + " -> " + item.topicName}
+                    
+                    {/*<p>{item.topicName}</p>
+                    <h6>{item.appName}</h6>*/}
                 </div>
                 
                 ))

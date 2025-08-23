@@ -16,6 +16,7 @@ export default function useFetch(baseUrl){
                 "Authorization" : `Bearer ${authToken}`
             }})
             .then(response => {
+                if(response.status === 401) {navigate("/login"); return;}
                 return response.json();
             })
             .then(data => {
@@ -47,7 +48,10 @@ export default function useFetch(baseUrl){
                     body : JSON.stringify(body)
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                if(response.status === 401) {navigate("/login"); return;}
+                return response.json()
+            })
             .then(data => {
                 if(!data){
                     setLoading(false);
@@ -76,7 +80,10 @@ export default function useFetch(baseUrl){
                     body : JSON.stringify(body)
                 }
             })
-            .then(response => response.text())
+            .then(response => {
+                if(response.status === 401) {navigate("/login"); return;}
+                return response.text()
+            })
             .then(data => {
                 if(!data){
                     setLoading(false);
@@ -132,7 +139,10 @@ export default function useFetch(baseUrl){
                     body : body
                 }
             })
-            .then(response => response.text())
+            .then(response => {
+                if(response.status === 401) {navigate("/login"); return;}
+                return response.text()
+            })
             .then(data => {
                 if(!data){
                     setLoading(false);
@@ -158,7 +168,10 @@ export default function useFetch(baseUrl){
                 },
                 body : JSON.stringify(body)
             })
-            .then(response => response.text())
+            .then(response => {
+                if(response.status === 401) {navigate("/login"); return;}
+                return response.text()
+            })
             .then(data => {
                 if(!data){
                     return reject(data);
@@ -184,7 +197,10 @@ export default function useFetch(baseUrl){
                     body : JSON.stringify(body)
                 }
             })
-            .then(response => response.text())
+            .then(response => {
+                if(response.status === 401) {navigate("/login"); return;}
+                return response.text();
+            })
             .then(data => {
                 if(!data){
                     setLoading(false);
